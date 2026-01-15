@@ -1,0 +1,1260 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>La Irrigación en el Perú | UNDC – Agronomía</title>
+  <meta name="description" content="Sitio interactivo – La Irrigación en el Perú. UNDC – Agronomía. Docente: Dr. Julio Cesar Matos Lizana.">
+
+  <style>
+    :root{
+      --bg1:#070a14;
+      --bg2:#0b1020;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.04);
+      --stroke: rgba(255,255,255,.12);
+      --text: #eaf0ff;
+      --muted: rgba(234,240,255,.72);
+      --a1:#6ae4ff;
+      --a2:#a78bfa;
+      --a3:#34d399;
+      --warn:#fbbf24;
+      --bad:#fb7185;
+      --shadow: 0 18px 45px rgba(0,0,0,.35);
+      --r1: 16px;
+      --r2: 26px;
+      --max: 1120px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(1200px 700px at 10% 10%, rgba(106,228,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 90% 20%, rgba(167,139,250,.16), transparent 55%),
+        radial-gradient(900px 700px at 65% 95%, rgba(52,211,153,.14), transparent 55%),
+        linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 45%, var(--bg1) 100%);
+      overflow-x:hidden;
+    }
+    a{color:var(--a1); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{max-width:var(--max); margin:0 auto; padding:22px}
+
+    /* Topbar */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(7,10,20,.62);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .topbar .wrap{
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      padding:12px 22px;
+    }
+    .brand{display:flex; align-items:center; gap:12px; min-width: 280px;}
+    .logoGroup{
+      display:flex; align-items:center; gap:10px;
+      padding:8px 10px; border-radius: 999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.05);
+    }
+    .logo{
+      width:40px; height:40px;
+      border-radius: 14px;
+      object-fit: contain;
+      padding:4px;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+    }
+    .brand h1{margin:0; font-size:14px; line-height:1.15}
+    .brand p{margin:2px 0 0; font-size:12px; color:var(--muted)}
+
+    .nav{
+      display:flex; gap:10px; flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .nav a{
+      font-size:12px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+    }
+    .nav a:hover{background: rgba(255,255,255,.09)}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; align-items:center}
+
+    .btn{
+      cursor:pointer;
+      border:none;
+      padding:10px 12px;
+      border-radius: 14px;
+      color:#071018;
+      font-weight:900;
+      letter-spacing:.2px;
+      background: linear-gradient(90deg, var(--a1), var(--a2));
+      box-shadow: 0 14px 30px rgba(106,228,255,.12);
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .btn.secondary{
+      color: var(--text);
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--stroke);
+      box-shadow:none;
+      font-weight:800;
+    }
+    .btn.ghost{
+      color: var(--text);
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.10);
+      font-weight:800;
+      box-shadow:none;
+    }
+
+    @media (max-width: 980px){
+      .topbar .wrap{align-items:flex-start; flex-direction:column}
+      .nav{justify-content:flex-start}
+      .actions{justify-content:flex-start}
+      .brand{min-width:auto}
+    }
+
+    /* Hero */
+    .hero{
+      padding:18px 0 6px;
+      display:grid;
+      grid-template-columns: 1.35fr .65fr;
+      gap:16px;
+      align-items:stretch;
+    }
+    @media (max-width: 980px){ .hero{grid-template-columns:1fr} }
+    .heroCard{
+      border-radius: var(--r2);
+      border:1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(600px 260px at 10% 0%, rgba(251,191,36,.16), transparent 60%),
+        radial-gradient(700px 300px at 90% 10%, rgba(106,228,255,.16), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      padding:16px;
+      position:relative;
+      overflow:hidden;
+    }
+    .heroCard:after{
+      content:"";
+      position:absolute; inset:-80px -120px auto auto;
+      width:260px; height:260px;
+      background: radial-gradient(circle at 35% 35%, rgba(167,139,250,.22), transparent 60%);
+      transform: rotate(18deg);
+      pointer-events:none;
+    }
+    .title{
+      margin:0;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height:1.04;
+      letter-spacing:.2px;
+    }
+    .subtitle{
+      margin:10px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height:1.65;
+      max-width: 80ch;
+    }
+    .meta{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin-top:12px;
+    }
+    .pill{
+      font-size:12px;
+      color: #eaf0ff;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      border-radius:999px;
+      padding:8px 10px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .pill b{font-weight:900}
+
+    .sideCard{
+      border-radius: var(--r2);
+      border:1px solid rgba(255,255,255,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+      padding:14px;
+    }
+    .sideCard h3{margin:0 0 8px; font-size:14px}
+    .sideCard p{margin:0; color: var(--muted); font-size:13px; line-height:1.65}
+    .quickActions{
+      display:grid; gap:10px; margin-top:12px;
+    }
+    .qa{
+      cursor:pointer;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      padding:12px;
+      display:flex; align-items:flex-start; gap:10px;
+      transition: transform .15s ease, background .15s ease;
+    }
+    .qa:hover{transform: translateY(-2px); background: rgba(255,255,255,.07)}
+    .qa .ico{
+      width:42px; height:42px; border-radius: 16px;
+      display:grid; place-items:center;
+      background: linear-gradient(135deg, rgba(106,228,255,.25), rgba(52,211,153,.18));
+      border:1px solid rgba(255,255,255,.12);
+      flex: 0 0 auto;
+    }
+    .qa h4{margin:0; font-size:13px}
+    .qa span{display:block; margin-top:4px; color: var(--muted); font-size:12px; line-height:1.55}
+
+    /* Layout sections */
+    .section{padding:18px 0 6px}
+    .section h2{
+      margin:0 0 10px;
+      font-size: 20px;
+      letter-spacing:.2px;
+    }
+    .lead{margin:0 0 12px; color: var(--muted); font-size:13.5px; line-height:1.75; max-width: 95ch;}
+    .grid2{display:grid; grid-template-columns: 1fr 1fr; gap:14px;}
+    .grid3{display:grid; grid-template-columns: repeat(3,1fr); gap:14px;}
+    @media (max-width: 980px){
+      .grid2,.grid3{grid-template-columns:1fr}
+    }
+
+    .card{
+      border-radius: var(--r2);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      padding:14px;
+      box-shadow: var(--shadow);
+    }
+    .card h3{margin:0 0 8px; font-size:14px}
+    .card p{margin:0; color: var(--muted); font-size:13px; line-height:1.65}
+    .chipRow{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;}
+    .chip{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:7px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      font-size:12px;
+      color: rgba(234,240,255,.92);
+    }
+
+    /* Tabs map */
+    .tabs{display:flex; gap:10px; flex-wrap:wrap; margin: 8px 0 12px;}
+    .tabbtn{
+      cursor:pointer;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      padding:10px 12px;
+      border-radius:999px;
+      font-size:12px;
+      user-select:none;
+      font-weight:800;
+    }
+    .tabbtn[aria-selected="true"]{
+      background: linear-gradient(90deg, rgba(106,228,255,.18), rgba(167,139,250,.14));
+      border-color: rgba(106,228,255,.26);
+    }
+    .tabpanel{display:none}
+    .tabpanel.active{display:block}
+
+    /* Glossary tooltip */
+    .g{
+      position:relative;
+      display:inline-block;
+      border-bottom:1px dashed rgba(255,255,255,.35);
+      cursor:help;
+      color: rgba(234,240,255,.92);
+      font-weight:800;
+    }
+    .g:hover .gt{
+      opacity:1; transform: translateY(0);
+      pointer-events:auto;
+    }
+    .gt{
+      opacity:0;
+      pointer-events:none;
+      position:absolute;
+      left:0; top: calc(100% + 8px);
+      width: min(360px, 70vw);
+      padding:10px 12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(7,10,20,.88);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      color: var(--muted);
+      font-size:12px;
+      line-height:1.55;
+      transform: translateY(-6px);
+      z-index: 10;
+    }
+    .gt b{color: rgba(234,240,255,.95)}
+
+    /* Mini simulator */
+    .sim{
+      display:grid; gap:12px;
+    }
+    .simRow{display:grid; gap:8px}
+    .simRow label{font-size:12px; color: rgba(234,240,255,.9); font-weight:800}
+    input[type="range"]{width:100%}
+    .kpis{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    @media (max-width: 520px){ .kpis{grid-template-columns:1fr} }
+    .kpi{
+      padding:12px;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+    }
+    .kpi .n{
+      font-family: var(--mono);
+      font-size:13px;
+      color: rgba(234,240,255,.92);
+      font-weight:900;
+    }
+    .kpi .d{margin-top:6px; color: var(--muted); font-size:12px; line-height:1.55}
+
+    /* Timeline */
+    .timeline{display:grid; gap:10px}
+    .titem{
+      display:grid;
+      grid-template-columns: 130px 1fr;
+      gap:12px;
+      padding:12px 14px;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+    }
+    .when{font-family: var(--mono); font-size:12px; color: rgba(234,240,255,.9)}
+    .what{font-size:13px; color: var(--muted); line-height:1.65}
+
+    /* Quiz */
+    .quizTop{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      align-items:start;
+    }
+    @media (max-width: 980px){ .quizTop{grid-template-columns:1fr} }
+
+    .field{
+      display:grid; gap:8px;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      padding:12px;
+    }
+    .field label{font-size:12px; font-weight:900; color: rgba(234,240,255,.92)}
+    .field input{
+      width:100%;
+      padding:10px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(7,10,20,.55);
+      color: rgba(234,240,255,.95);
+      outline:none;
+      font-size:13px;
+    }
+    .field input::placeholder{color: rgba(234,240,255,.55)}
+
+    .progressWrap{
+      padding:12px;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+    }
+    .progressHead{
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center;
+    }
+    .progressHead .t{font-size:12px; font-weight:900}
+    .bar{
+      height:10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.10);
+      overflow:hidden;
+      margin-top:10px;
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .bar > div{
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, var(--a3), var(--a1), var(--a2));
+      transition: width .25s ease;
+    }
+
+    .qList{display:grid; gap:12px; margin-top:14px;}
+    .q{
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      padding:12px;
+    }
+    .q h4{margin:0 0 10px; font-size:13.5px}
+    .opts{display:grid; gap:8px}
+    .opt{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:10px 10px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(7,10,20,.35);
+      cursor:pointer;
+      transition: background .15s ease, transform .15s ease;
+    }
+    .opt:hover{background: rgba(255,255,255,.06); transform: translateY(-1px)}
+    .opt input{margin-top:2px}
+
+    .quizActions{
+      display:flex; flex-wrap:wrap; gap:10px;
+      justify-content:space-between; align-items:center;
+      margin-top: 12px;
+    }
+    .result{
+      font-family: var(--mono);
+      font-size:12px;
+      color: rgba(234,240,255,.92);
+      padding:10px 12px;
+      border-radius: 14px;
+      border:1px dashed rgba(255,255,255,.18);
+      background: rgba(255,255,255,.04);
+      flex:1 1 auto;
+      min-width: 260px;
+    }
+    table{
+      width:100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      overflow:hidden;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
+    th,td{
+      padding:10px 10px;
+      font-size:12px;
+      color: rgba(234,240,255,.92);
+      border-bottom:1px solid rgba(255,255,255,.08);
+      text-align:left;
+      vertical-align: top;
+    }
+    th{background: rgba(255,255,255,.05); font-weight:900}
+    tr:last-child td{border-bottom:none}
+    .small{font-size:12px; color: var(--muted); margin-top:10px; line-height:1.6}
+
+    footer{
+      margin-top:18px;
+      padding:26px 0 34px;
+      border-top:1px solid rgba(255,255,255,.10);
+      color: rgba(234,240,255,.72);
+      font-size:12px;
+    }
+
+    /* ============ PRESENTATION MODE ============ */
+    body.presentation{overflow:hidden}
+    body.presentation .nav{display:none}
+    body.presentation .section{padding:12px 0 6px}
+    body.presentation .slide{display:none; min-height: calc(100vh - 92px); padding: 10px 0;}
+    body.presentation .slide.active{display:block}
+    .presentControls{
+      display:none;
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      z-index: 999;
+      gap:10px;
+      align-items:center;
+      padding:10px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(7,10,20,.68);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+    }
+    body.presentation .presentControls{display:flex}
+    .counter{
+      font-family: var(--mono);
+      font-size:12px;
+      color: rgba(234,240,255,.9);
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      min-width: 140px;
+      text-align:center;
+      font-weight:900;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <div class="brand">
+        <div class="logoGroup" aria-label="Logos">
+          <img class="logo" src="images.jpg" alt="Logo Agronomía UNDC">
+          <img class="logo" src="UNDC.jpg" alt="Logo UNDC">
+        </div>
+        <div>
+          <h1>UNDC – Agronomía | Sistemas de Riego y Drenaje</h1>
+          <p>Sesión 1 · La Irrigación en el Perú · Docente: <b>Dr. Julio Cesar Matos Lizana</b></p>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Navegación">
+        <a href="#inicio">Inicio</a>
+        <a href="#mapa">Mapa</a>
+        <a href="#simulador">Simulador</a>
+        <a href="#historia">Historia</a>
+        <a href="#gestion">Gestión</a>
+        <a href="#desafios">Desafíos</a>
+        <a href="#proyectos">Proyectos</a>
+        <a href="#quiz">Quiz</a>
+      </nav>
+
+      <div class="actions">
+        <button class="btn" id="presentBtn">MODO PRESENTACIÓN</button>
+        <button class="btn ghost" id="scrollQuizBtn">Ir al Quiz</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Controles presentación -->
+  <div class="presentControls" aria-label="Controles de presentación">
+    <button class="btn secondary" id="prevSlide">◀ Anterior</button>
+    <div class="counter" id="slideCounter">—</div>
+    <button class="btn secondary" id="nextSlide">Siguiente ▶</button>
+    <button class="btn" id="exitPresent">Salir ✕</button>
+  </div>
+
+  <main class="wrap" id="inicio">
+    <!-- SLIDE 1: HERO -->
+    <section class="hero slide" data-slide aria-label="Inicio">
+      <div class="heroCard">
+        <h2 class="title">La irrigación en el Perú</h2>
+        <p class="subtitle">
+          El riego ha sido y seguirá siendo un factor determinante para la <b>seguridad alimentaria</b>,
+          el <b>crecimiento agrícola</b> y el <b>desarrollo humano</b>. En un país con costa desértica y
+          sierra con lluvias estacionales, la clave es <b>gestionar el agua</b>.
+        </p>
+
+        <div class="meta">
+          <div class="pill">📍 <b>UNDC</b> · Agronomía</div>
+          <div class="pill">🧪 Curso: <b>Sistemas de Riego y Drenaje</b></div>
+          <div class="pill">💧 Tema: <b>Irrigación</b> · eficiencia · clima</div>
+          <div class="pill">👨‍🏫 Docente: <b>Dr. Julio Cesar Matos Lizana</b></div>
+        </div>
+
+        <div class="chipRow" style="margin-top:14px">
+          <span class="chip">🎯 Meta del tema: producir más con menos agua</span>
+          <span class="chip">📏 Medir + planificar + mantener</span>
+          <span class="chip">🌡️ Adaptación climática</span>
+        </div>
+
+        <p class="small" style="margin-top:12px">
+          Pasa el mouse por términos subrayados: por ejemplo <span class="g">eficiencia del riego
+          <span class="gt"><b>Eficiencia</b>: proporción del agua aplicada que realmente queda disponible para el cultivo (zona radicular). Pérdidas típicas: infiltración profunda, evaporación, escorrentía.</span>
+          </span>.
+        </p>
+      </div>
+
+      <aside class="sideCard">
+        <h3>Ruta interactiva (clic)</h3>
+        <p>Elige qué quieres explorar primero:</p>
+        <div class="quickActions">
+          <div class="qa" data-jump="#mapa">
+            <div class="ico">🗺️</div>
+            <div>
+              <h4>Mapa por regiones</h4>
+              <span>Costa / Sierra / Selva: necesidades y retos.</span>
+            </div>
+          </div>
+          <div class="qa" data-jump="#simulador">
+            <div class="ico">⚙️</div>
+            <div>
+              <h4>Simulador de eficiencia</h4>
+              <span>Ajusta pérdidas y mira el efecto.</span>
+            </div>
+          </div>
+          <div class="qa" data-jump="#quiz">
+            <div class="ico">📝</div>
+            <div>
+              <h4>Quiz (12 preguntas)</h4>
+              <span>Puntaje + ranking por nombre.</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- SLIDE 2: MAPA -->
+    <section class="section slide" data-slide id="mapa" aria-label="Mapa por regiones">
+      <h2>Mapa por regiones: ¿por qué el riego es distinto en cada zona?</h2>
+      <p class="lead">
+        El Perú combina <b>costa desértica</b>, <b>sierra estacional</b> y <b>selva húmeda</b>. Esto determina
+        la prioridad del riego, el tipo de infraestructura y los riesgos (salinidad, erosión, etc.).
+      </p>
+
+      <div class="tabs" role="tablist" aria-label="Regiones">
+        <button class="tabbtn" role="tab" aria-selected="true" aria-controls="co" id="tco">Costa</button>
+        <button class="tabbtn" role="tab" aria-selected="false" aria-controls="si" id="tsi">Sierra</button>
+        <button class="tabbtn" role="tab" aria-selected="false" aria-controls="se" id="tse">Selva</button>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <div id="co" class="tabpanel active" role="tabpanel" aria-labelledby="tco">
+            <h3>🏜️ Costa</h3>
+            <p>
+              Territorio fértil pero seco: la agricultura intensiva depende del riego. Riesgo clave:
+              <span class="g">salinización<span class="gt"><b>Salinización</b>: acumulación de sales en el suelo por mal drenaje o riegos excesivos; reduce rendimiento y degrada la estructura del suelo.</span></span>.
+            </p>
+            <div class="chipRow">
+              <span class="chip">🌊 Ríos cortos e irregulares</span>
+              <span class="chip">🚰 Alta demanda de agua</span>
+              <span class="chip">💧 Tecnificado (goteo) recomendado</span>
+            </div>
+          </div>
+
+          <div id="si" class="tabpanel" role="tabpanel" aria-labelledby="tsi">
+            <h3>⛰️ Sierra</h3>
+            <p>
+              Lluvias concentradas (época húmeda). El riego ayuda a extender la campaña y reducir pérdidas en época seca.
+              Tecnologías útiles: siembra y cosecha de agua (amunas), reservorios, riego presurizado.
+            </p>
+            <div class="chipRow">
+              <span class="chip">🌧️ Estacionalidad marcada</span>
+              <span class="chip">🏞️ Reservorios/lagunas</span>
+              <span class="chip">🧱 Andenes y manejo de laderas</span>
+            </div>
+          </div>
+
+          <div id="se" class="tabpanel" role="tabpanel" aria-labelledby="tse">
+            <h3>🌿 Selva</h3>
+            <p>
+              Abundancia de agua, pero el riego puede ser necesario en periodos específicos, suelos drenantes o cultivos
+              con alta exigencia. Riesgo: manejo de drenaje y erosión en zonas intervenidas.
+            </p>
+            <div class="chipRow">
+              <span class="chip">💦 Oferta hídrica alta</span>
+              <span class="chip">🧪 Calidad/contaminación local</span>
+              <span class="chip">🌱 Riego puntual</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>🎯 Mini-reto (1 minuto)</h3>
+          <p class="muted">
+            Responde mentalmente: ¿qué es más crítico en tu zona de estudio?
+            <b>escasez</b>, <b>eficiencia</b> o <b>calidad del agua</b>.
+          </p>
+          <div class="chipRow">
+            <span class="chip">Costa: escasez + salinidad</span>
+            <span class="chip">Sierra: regulación + almacenamiento</span>
+            <span class="chip">Selva: drenaje + gestión territorial</span>
+          </div>
+          <p class="small">Sugerencia docente: pide 1 ejemplo del valle de Cañete (canales, turnos, pérdidas, tecnificación).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: SIMULADOR -->
+    <section class="section slide" data-slide id="simulador" aria-label="Simulador de eficiencia">
+      <h2>Simulador rápido: ¿cuánta agua realmente aprovecha el cultivo?</h2>
+      <p class="lead">
+        Ajusta pérdidas típicas y mira el resultado. Objetivo: entender por qué “tener agua” no siempre significa “aprovecharla”.
+      </p>
+
+      <div class="grid2">
+        <div class="card sim">
+          <h3>⚙️ Controles</h3>
+
+          <div class="simRow">
+            <label>Infiltración profunda (pérdida) <span id="vInf">25%</span></label>
+            <input id="inf" type="range" min="0" max="60" value="25">
+          </div>
+
+          <div class="simRow">
+            <label>Evaporación superficial (pérdida) <span id="vEva">15%</span></label>
+            <input id="eva" type="range" min="0" max="40" value="15">
+          </div>
+
+          <div class="simRow">
+            <label>Escorrentía/derrame (pérdida) <span id="vEsc">10%</span></label>
+            <input id="esc" type="range" min="0" max="40" value="10">
+          </div>
+
+          <div class="simRow">
+            <label>Agua aplicada (mm) <span id="vApp">60</span> mm</label>
+            <input id="app" type="range" min="20" max="120" value="60">
+          </div>
+
+          <button class="btn secondary" id="presetTech">Preset: riego tecnificado</button>
+        </div>
+
+        <div class="card">
+          <h3>📊 Resultados</h3>
+          <div class="kpis">
+            <div class="kpi">
+              <div class="n" id="eff">—%</div>
+              <div class="d">Eficiencia estimada (agua útil / agua aplicada).</div>
+            </div>
+            <div class="kpi">
+              <div class="n" id="use">— mm</div>
+              <div class="d">Agua útil estimada (disponible para la raíz).</div>
+            </div>
+            <div class="kpi">
+              <div class="n" id="loss">— mm</div>
+              <div class="d">Pérdidas totales (infiltración + evaporación + escorrentía).</div>
+            </div>
+            <div class="kpi">
+              <div class="n" id="hint">—</div>
+              <div class="d">Recomendación práctica para mejorar.</div>
+            </div>
+          </div>
+
+          <p class="small">
+            Tip: reducir pérdidas puede lograrse con nivelación, manejo de turnos, revestimiento, compuertas,
+            presurización (aspersión/goteo) y buen drenaje.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: HISTORIA -->
+    <section class="section slide" data-slide id="historia" aria-label="Historia y tendencias">
+      <h2>Tendencias del riego en el Perú: de lo ancestral a lo moderno</h2>
+      <p class="lead">
+        El país tiene herencia hidráulica milenaria (Chavín, culturas preincas e Incas), periodos de estancamiento y luego
+        modernización con grandes proyectos en la costa.
+      </p>
+
+      <div class="grid2">
+        <div class="card">
+          <h3>🕰️ Línea de tiempo</h3>
+          <div class="timeline">
+            <div class="titem"><div class="when">~5000 años</div><div class="what">Sistemas simples y canales (Chavín).</div></div>
+            <div class="titem"><div class="when">Incas</div><div class="what">Ingeniería hidráulica: andenes, canales, manejo territorial.</div></div>
+            <div class="titem"><div class="when">Colonial</div><div class="what">Enfoque minero; caída y estancamiento de infraestructura.</div></div>
+            <div class="titem"><div class="when">Siglo XX</div><div class="what">Estancamiento (especialmente décadas 70–80).</div></div>
+            <div class="titem"><div class="when">Últimas décadas</div><div class="what">Inversiones en presas, riego, drenaje y tecnificación.</div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>🧠 Micro-conceptos (clic)</h3>
+          <details>
+            <summary><b>🌊 Amunas</b> (siembra y cosecha de agua)</summary>
+            <p class="muted">Recarga acuíferos infiltrando agua en cabeceras para recuperarla meses después en zonas bajas.</p>
+          </details>
+          <details>
+            <summary><b>🏞️ Andenes</b></summary>
+            <p class="muted">Terrazas que reducen erosión, retienen agua y permiten cultivar en pendientes.</p>
+          </details>
+          <details>
+            <summary><b>💧 Tecnificación</b></summary>
+            <p class="muted">Aspersión y goteo elevan eficiencia y control. Requiere inversión, mantenimiento y capacitación.</p>
+          </details>
+          <p class="small">Sugerencia: pide ejemplos locales (Canal de regadío, turnos, pérdidas, drenaje, salinidad).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: GESTIÓN -->
+    <section class="section slide" data-slide id="gestion" aria-label="Gestión del agua">
+      <h2>Gestión del agua: instituciones y usuarios</h2>
+      <p class="lead">
+        La gestión del riego combina rectoría estatal y organización local. La mejora no es solo “obra”, también es
+        <b>operación, mantenimiento y medición</b>.
+      </p>
+
+      <div class="grid3">
+        <div class="card">
+          <h3>🏛️ Estado (MIDAGRI / ANA)</h3>
+          <p>Planificación, regulación, proyectos e instrumentos de gestión de cuencas.</p>
+          <div class="chipRow"><span class="chip">Planificación</span><span class="chip">Regulación</span><span class="chip">Inversión</span></div>
+        </div>
+        <div class="card">
+          <h3>👥 Juntas de Usuarios</h3>
+          <p>Distribución del agua, mantenimiento de canales y resolución de conflictos locales.</p>
+          <div class="chipRow"><span class="chip">Turnos</span><span class="chip">O&amp;M</span><span class="chip">Acuerdos</span></div>
+        </div>
+        <div class="card">
+          <h3>📏 Medición y derechos</h3>
+          <p>Formalización y medición volumétrica incentivan eficiencia e inversión tecnológica.</p>
+          <div class="chipRow"><span class="chip">Medición</span><span class="chip">Derechos</span><span class="chip">Control</span></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h3>🎯 Pregunta de discusión (para aula)</h3>
+        <p class="muted">¿Qué falla más en la realidad: infraestructura, gestión de turnos, mantenimiento, o medición del agua?</p>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: DESAFÍOS -->
+    <section class="section slide" data-slide id="desafios" aria-label="Desafíos">
+      <h2>Desafíos y problemas principales</h2>
+      <p class="lead">
+        Problemas clave: escasez y mala distribución, baja eficiencia, infraestructura antigua, contaminación y cambio climático.
+      </p>
+
+      <div class="card">
+        <div class="chipRow">
+          <span class="chip">⚠️ Escasez / estrés hídrico</span>
+          <span class="chip">💦 Ineficiencia (pérdidas)</span>
+          <span class="chip">🧱 Canales de tierra</span>
+          <span class="chip">🧪 Contaminación</span>
+          <span class="chip">🌡️ Cambio climático</span>
+        </div>
+        <p class="small">
+          Clave: el retroceso glaciar afecta oferta en el mediano plazo; eventos extremos (p.ej., El Niño) dañan infraestructura y cultivos.
+        </p>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: PROYECTOS -->
+    <section class="section slide" data-slide id="proyectos" aria-label="Proyectos">
+      <h2>Proyectos de irrigación y estrategia nacional</h2>
+      <p class="lead">
+        Grandes irrigaciones impulsan agroexportación y expansión agrícola. Paralelamente, la estrategia busca eficiencia, sostenibilidad y fortalecimiento de usuarios.
+      </p>
+
+      <div class="grid3">
+        <div class="card"><h3>🏗️ Chavimochic</h3><p>Transformación de desierto en zona productiva.</p></div>
+        <div class="card"><h3>🧭 Olmos</h3><p>Trasvase Atlántico → Pacífico.</p></div>
+        <div class="card"><h3>⚙️ Majes-Siguas II</h3><p>Proyecto de irrigación extensa y complejo.</p></div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h3>✅ Ideas fuerza (resumen)</h3>
+        <ul class="muted" style="margin:8px 0 0; padding-left:18px; line-height:1.7; font-size:13px">
+          <li>Aumentar competitividad con uso eficiente del agua.</li>
+          <li>Rehabilitar y modernizar infraestructura.</li>
+          <li>Fortalecer operación y mantenimiento.</li>
+          <li>Formalizar derechos y promover inversión tecnológica.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SLIDE 8: QUIZ -->
+    <section class="section slide" data-slide id="quiz" aria-label="Quiz">
+      <h2>Quiz interactivo (12 preguntas) + Guardar puntaje</h2>
+      <p class="lead">
+        Ingresa tu <b>Nombre y Apellido</b>, responde, califica y guarda tu puntaje. Se queda guardado en este navegador.
+      </p>
+
+      <div class="quizTop">
+        <div class="field">
+          <label for="studentName">Nombre y Apellido</label>
+          <input id="studentName" type="text" placeholder="Ejemplo: Pérez Ramos, Juan">
+          <div class="small">Recomendación: escribe tu apellido primero para ordenar mejor.</div>
+        </div>
+
+        <div class="progressWrap">
+          <div class="progressHead">
+            <div class="t">Progreso del quiz</div>
+            <div class="t" id="progText">0/12 respondidas</div>
+          </div>
+          <div class="bar"><div id="progBar"></div></div>
+          <div class="small">Tip: puedes corregir tus respuestas antes de calificar.</div>
+        </div>
+      </div>
+
+      <div class="qList" id="qList"></div>
+
+      <div class="quizActions">
+        <button class="btn" id="gradeBtn">Calificar</button>
+        <button class="btn secondary" id="saveBtn">Guardar puntaje</button>
+        <button class="btn ghost" id="resetBtn">Reiniciar</button>
+        <button class="btn secondary" id="exportBtn">Exportar CSV</button>
+        <div class="result" id="resultBox">Resultado: —</div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <h3>🏆 Ranking (local)</h3>
+        <p class="muted">Se guardan los mejores intentos por nombre (máximo 20 registros).</p>
+        <div id="rankBox"></div>
+      </div>
+
+      <p class="small">
+        Nota: El ranking se guarda en el navegador del equipo. Si abres en otra PC o borras datos del navegador, se reinicia.
+      </p>
+    </section>
+
+    <footer>
+      <div><b>Universidad Nacional de Cañete – UNDC</b> · Escuela Profesional de Agronomía</div>
+      <div class="muted">Sitio interactivo – Sesión 1: La Irrigación en el Perú · Docente: Dr. Julio Cesar Matos Lizana</div>
+    </footer>
+  </main>
+
+  <script>
+    // ========= Navegación rápida =========
+    document.getElementById('scrollQuizBtn').addEventListener('click', () => {
+      document.querySelector('#quiz').scrollIntoView({behavior:'smooth', block:'start'});
+    });
+    document.querySelectorAll('[data-jump]').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        const sel = el.getAttribute('data-jump');
+        document.querySelector(sel)?.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+
+    // ========= Tabs (regiones) =========
+    (function(){
+      const btns = Array.from(document.querySelectorAll('.tabbtn'));
+      const panels = Array.from(document.querySelectorAll('.tabpanel'));
+      function activate(id){
+        btns.forEach(b => b.setAttribute('aria-selected', b.getAttribute('aria-controls') === id ? 'true' : 'false'));
+        panels.forEach(p => p.classList.toggle('active', p.id === id));
+      }
+      btns.forEach(b => b.addEventListener('click', () => activate(b.getAttribute('aria-controls'))));
+    })();
+
+    // ========= Simulador =========
+    (function(){
+      const inf = document.getElementById('inf');
+      const eva = document.getElementById('eva');
+      const esc = document.getElementById('esc');
+      const app = document.getElementById('app');
+
+      const vInf = document.getElementById('vInf');
+      const vEva = document.getElementById('vEva');
+      const vEsc = document.getElementById('vEsc');
+      const vApp = document.getElementById('vApp');
+
+      const eff = document.getElementById('eff');
+      const use = document.getElementById('use');
+      const loss = document.getElementById('loss');
+      const hint = document.getElementById('hint');
+
+      function rec(e){
+        if (e >= 80) return "Excelente: Mantén mantenimiento + medición.";
+        if (e >= 65) return "Bien: mejora turnos, nivelación y control de lámina.";
+        if (e >= 50) return "Regular: considera presurización (aspersión/goteo).";
+        return "Crítico: revisar diseño, drenaje y pérdidas en conducción/aplicación.";
+      }
+
+      function calc(){
+        const pinf = +inf.value, peva = +eva.value, pesc = +esc.value;
+        const applied = +app.value;
+
+        vInf.textContent = pinf + "%";
+        vEva.textContent = peva + "%";
+        vEsc.textContent = pesc + "%";
+        vApp.textContent = applied;
+
+        const totalLossPct = Math.min(100, pinf + peva + pesc);
+        const usefulPct = Math.max(0, 100 - totalLossPct);
+
+        const usefulMm = applied * (usefulPct/100);
+        const lossMm = applied - usefulMm;
+
+        eff.textContent = usefulPct.toFixed(0) + "%";
+        use.textContent = usefulMm.toFixed(1) + " mm";
+        loss.textContent = lossMm.toFixed(1) + " mm";
+        hint.textContent = rec(usefulPct);
+      }
+
+      [inf,eva,esc,app].forEach(x => x.addEventListener('input', calc));
+      document.getElementById('presetTech').addEventListener('click', ()=>{
+        inf.value = 10; eva.value = 8; esc.value = 2; app.value = 55;
+        calc();
+      });
+      calc();
+    })();
+
+    // ========= Quiz (12 preguntas) =========
+    const quiz = [
+      {id:"q1",  q:"1) ¿Por qué la costa peruana depende fuertemente del riego?", a:"b",
+        o:{a:"Porque tiene lluvias abundantes todo el año", b:"Porque es fértil pero seca y con lluvias casi nulas", c:"Porque la agricultura es solo de subsistencia", d:"Porque no existen ríos en la costa"}},
+
+      {id:"q2",  q:"2) En la sierra, la irrigación ayuda principalmente a:", a:"c",
+        o:{a:"Eliminar totalmente la estacionalidad", b:"Aumentar la salinización del suelo", c:"Extender la temporada de cultivo más allá de las lluvias", d:"Reemplazar el manejo de suelos"}},
+
+      {id:"q3",  q:"3) Los ríos de la vertiente del Pacífico se caracterizan por:", a:"a",
+        o:{a:"Caudal irregular y estacionalidad marcada", b:"Ser muy largos y constantes", c:"Tener caudal máximo en invierno", d:"No aportar a la irrigación costera"}},
+
+      {id:"q4",  q:"4) ¿Qué describe mejor a las amunas?", a:"b",
+        o:{a:"Riego por goteo automatizado", b:"Recarga de acuíferos infiltrando agua en partes altas", c:"Canales para evacuar relaves mineros", d:"Sistema exclusivo de la selva"}},
+
+      {id:"q5",  q:"5) Una desventaja típica del riego por gravedad (surcos) es:", a:"c",
+        o:{a:"Es imposible aplicarlo en costa", b:"Requiere alta inversión inicial", c:"Baja eficiencia por pérdidas (evaporación/infiltración/escorrentía)", d:"No requiere mantenimiento"}},
+
+      {id:"q6",  q:"6) Un riesgo del uso excesivo de aguas subterráneas en la costa es:", a:"a",
+        o:{a:"Sobreexplotación y salinización de acuíferos", b:"Aumento permanente de lluvias", c:"Mayor formación de glaciares", d:"Disminución total de la evapotranspiración"}},
+
+      {id:"q7",  q:"7) ¿Cuál es una consecuencia ambiental frecuente asociada a riego ineficiente y mal drenaje?", a:"d",
+        o:{a:"Disminución de sales en el perfil", b:"Mayor infiltración útil siempre", c:"Aumento de biodiversidad por sales", d:"Salinización y anegamiento del suelo"}},
+
+      {id:"q8",  q:"8) ¿Qué actor suele encargarse de la distribución local, turnos y mantenimiento de canales?", a:"b",
+        o:{a:"Solo el MIDAGRI", b:"Juntas de Usuarios", c:"Solo municipalidades", d:"Solo empresas privadas"}},
+
+      {id:"q9",  q:"9) ¿Qué medida normalmente incrementa la eficiencia de aplicación de agua?", a:"c",
+        o:{a:"Aumentar caudal sin control", b:"Eliminar medición", c:"Riego tecnificado (aspersión/goteo) + buen manejo", d:"Regar más horas para “asegurar”"}},
+
+      {id:"q10", q:"10) El retroceso glaciar por cambio climático afecta el riego porque:", a:"a",
+        o:{a:"Reduce oferta hídrica regulada en el mediano plazo", b:"Aumenta indefinidamente la disponibilidad", c:"Elimina la estacionalidad", d:"Solo impacta a la selva"}},
+
+      {id:"q11", q:"11) En un valle costero, una prioridad técnica clave para evitar salinidad es:", a:"d",
+        o:{a:"Evitar toda infraestructura de drenaje", b:"Aplicar más lámina sin control", c:"Cerrar compuertas permanentemente", d:"Mejorar drenaje y controlar lámina/turnos"}},
+
+      {id:"q12", q:"12) Una forma práctica de reducir pérdidas en conducción (canales) es:", a:"b",
+        o:{a:"Hacer canales más largos", b:"Revestimiento/entubado y mantenimiento", c:"Aumentar evaporación para enfriar", d:"Eliminar compuertas"}}
+    ];
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]]=[a[j],a[i]];
+      }
+      return a;
+    }
+
+    const qList = document.getElementById('qList');
+    const progText = document.getElementById('progText');
+    const progBar = document.getElementById('progBar');
+    const resultBox = document.getElementById('resultBox');
+    const studentName = document.getElementById('studentName');
+
+    // Render preguntas (orden fijo para evaluación, pero puedes cambiar a shuffle(quiz))
+    const rendered = quiz; // o: shuffle(quiz)
+    function renderQuiz(){
+      qList.innerHTML = "";
+      rendered.forEach((item, idx)=>{
+        const div = document.createElement('div');
+        div.className = "q";
+        div.dataset.answer = item.a;
+        div.dataset.qid = item.id;
+
+        const opts = Object.entries(item.o).map(([k,v])=>{
+          return `
+            <label class="opt">
+              <input type="radio" name="${item.id}" value="${k}">
+              <div>
+                <div style="font-weight:900; font-size:12px; color:rgba(234,240,255,.95)">${k.toUpperCase()}.</div>
+                <div style="color:rgba(234,240,255,.74); font-size:12px; line-height:1.5">${v}</div>
+              </div>
+            </label>
+          `;
+        }).join("");
+
+        div.innerHTML = `
+          <h4>${item.q}</h4>
+          <div class="opts">${opts}</div>
+        `;
+        qList.appendChild(div);
+      });
+
+      // listeners progreso
+      document.querySelectorAll('input[type="radio"]').forEach(r=>{
+        r.addEventListener('change', updateProgress);
+      });
+      updateProgress();
+    }
+
+    function updateProgress(){
+      const total = rendered.length;
+      let answered = 0;
+      rendered.forEach(it=>{
+        if(document.querySelector(`input[name="${it.id}"]:checked`)) answered++;
+      });
+      progText.textContent = `${answered}/${total} respondidas`;
+      progBar.style.width = `${Math.round((answered/total)*100)}%`;
+    }
+
+    function gradeQuiz(){
+      const total = rendered.length;
+      let correct = 0, answered = 0;
+      rendered.forEach(it=>{
+        const sel = document.querySelector(`input[name="${it.id}"]:checked`);
+        if(sel) answered++;
+        if(sel && sel.value === it.a) correct++;
+      });
+      const pct = Math.round((correct/total)*100);
+      let msg = `Resultado: ${correct}/${total} (${pct}%) · Respondidas: ${answered}/${total}`;
+      if(pct >= 90) msg += " · Excelente ✅";
+      else if(pct >= 75) msg += " · Muy bien 👍";
+      else if(pct >= 60) msg += " · En proceso 🧠";
+      else msg += " · Repasa secciones clave 📚";
+      resultBox.textContent = msg;
+      return {correct,total,pct,answered};
+    }
+
+    function resetQuiz(){
+      document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+      resultBox.textContent = "Resultado: —";
+      updateProgress();
+      window.scrollTo({top: document.getElementById('quiz').offsetTop - 80, behavior:'smooth'});
+    }
+
+    // Ranking local
+    const KEY = "undc_irrigacion_scores_v1";
+    function loadScores(){
+      try{ return JSON.parse(localStorage.getItem(KEY) || "[]"); }
+      catch(e){ return []; }
+    }
+    function saveScores(list){
+      localStorage.setItem(KEY, JSON.stringify(list));
+    }
+
+    function renderRanking(){
+      const box = document.getElementById('rankBox');
+      const list = loadScores()
+        .sort((a,b)=> b.score - a.score || (b.time - a.time));
+      if(list.length === 0){
+        box.innerHTML = `<p class="muted">Aún no hay puntajes guardados.</p>`;
+        return;
+      }
+      const rows = list.map((x,i)=>`
+        <tr>
+          <td>${i+1}</td>
+          <td><b>${escapeHtml(x.name)}</b></td>
+          <td>${x.score}/${x.total} (${x.pct}%)</td>
+          <td style="color:rgba(234,240,255,.72)">${new Date(x.time).toLocaleString()}</td>
+        </tr>
+      `).join("");
+      box.innerHTML = `
+        <table aria-label="Ranking">
+          <thead>
+            <tr><th>#</th><th>Estudiante</th><th>Puntaje</th><th>Fecha</th></tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      `;
+    }
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g, (c)=>({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+      }[c]));
+    }
+
+    function exportCSV(){
+      const list = loadScores().sort((a,b)=> b.score - a.score);
+      if(list.length === 0){
+        alert("No hay registros para exportar.");
+        return;
+      }
+      const header = ["rank","name","score","total","pct","datetime_iso"];
+      const rows = list.map((x,i)=>[
+        i+1,
+        `"${String(x.name).replaceAll('"','""')}"`,
+        x.score, x.total, x.pct,
+        new Date(x.time).toISOString()
+      ].join(","));
+      const csv = [header.join(","), ...rows].join("\n");
+      const blob = new Blob([csv], {type:"text/csv;charset=utf-8;"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = "ranking_irrigacion_undc.csv";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('gradeBtn').addEventListener('click', gradeQuiz);
+
+    document.getElementById('saveBtn').addEventListener('click', ()=>{
+      const name = (studentName.value || "").trim();
+      if(!name){
+        alert("Por favor, escribe tu Nombre y Apellido antes de guardar.");
+        studentName.focus();
+        return;
+      }
+      const g = gradeQuiz();
+      const list = loadScores();
+
+      // Guardar mejor puntaje por nombre (si existe)
+      const existingIdx = list.findIndex(x => x.name.toLowerCase() === name.toLowerCase());
+      const record = {name, score:g.correct, total:g.total, pct:g.pct, time: Date.now()};
+
+      if(existingIdx >= 0){
+        // si mejora, reemplaza; si no, solo actualiza fecha
+        const prev = list[existingIdx];
+        if(record.score > prev.score) list[existingIdx] = record;
+        else list[existingIdx] = {...prev, time: Date.now()};
+      } else {
+        list.push(record);
+      }
+
+      // limitar a 20
+      const trimmed = list
+        .sort((a,b)=> b.score - a.score || (b.time - a.time))
+        .slice(0, 20);
+
+      saveScores(trimmed);
+      renderRanking();
+      alert("Puntaje guardado ✅");
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', resetQuiz);
+    document.getElementById('exportBtn').addEventListener('click', exportCSV);
+
+    renderQuiz();
+    renderRanking();
+
+    // ========= MODO PRESENTACIÓN =========
+    (function(){
+      const presentBtn = document.getElementById('presentBtn');
+      const exitBtn = document.getElementById('exitPresent');
+      const prevBtn = document.getElementById('prevSlide');
+      const nextBtn = document.getElementById('nextSlide');
+      const counter = document.getElementById('slideCounter');
+      const slides = Array.from(document.querySelectorAll('[data-slide]'));
+      let idx = 0;
+
+      function setActive(i){
+        idx = Math.max(0, Math.min(slides.length - 1, i));
+        slides.forEach((s, k) => s.classList.toggle('active', k === idx));
+        counter.textContent = `Diapositiva ${idx + 1} / ${slides.length}`;
+        window.scrollTo({top:0, behavior:'auto'});
+      }
+      function enter(){
+        document.body.classList.add('presentation');
+        // iniciar en slide más cercano al scroll actual
+        const near = slides
+          .map((s, k) => ({k, top: Math.abs(s.getBoundingClientRect().top)}))
+          .sort((a,b)=>a.top-b.top)[0]?.k ?? 0;
+        setActive(near);
+      }
+      function exit(){
+        document.body.classList.remove('presentation');
+        slides.forEach(s => s.classList.remove('active'));
+        slides[idx]?.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+      function next(){ setActive(idx + 1); }
+      function prev(){ setActive(idx - 1); }
+
+      presentBtn.addEventListener('click', () => {
+        if(!document.body.classList.contains('presentation')) enter();
+        else exit();
+      });
+      exitBtn.addEventListener('click', exit);
+      nextBtn.addEventListener('click', next);
+      prevBtn.addEventListener('click', prev);
+
+      document.addEventListener('keydown', (e) => {
+        if(!document.body.classList.contains('presentation')) return;
+        if(e.key === 'Escape') exit();
+        if(e.key === 'ArrowRight' || e.key === 'PageDown') next();
+        if(e.key === 'ArrowLeft' || e.key === 'PageUp') prev();
+      });
+    })();
+  </script>
+</body>
+</html>
