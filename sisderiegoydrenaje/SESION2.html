@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UNDC | Sistema de Riego y Drenaje | Sesión 2: Diseño de Sistema de Riego</title>
+  <meta name="description" content="Sesión 2 - Diseño de Sistema de Riego (Gravedad y Tecnificado). UNDC - Agronomía."/>
+  <style>
+    :root{
+      /* ✅ Paleta clara (azul + verde) */
+      --bg: #F6FBFF;
+      --bg2:#F3FFF8;
+      --card: rgba(255,255,255,.92);
+      --card2: rgba(255,255,255,.72);
+      --line: rgba(15, 23, 42, .10);
+      --text: #0B1220;
+      --muted: rgba(11,18,32,.70);
+
+      --blue:#1D4ED8;
+      --blue2:#38BDF8;
+      --green:#16A34A;
+      --green2:#34D399;
+
+      --shadow: 0 18px 60px rgba(2, 6, 23, .10);
+      --radius: 18px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 700px at 18% 10%, rgba(56,189,248,.22), transparent 55%),
+        radial-gradient(900px 650px at 80% 14%, rgba(52,211,153,.20), transparent 55%),
+        radial-gradient(900px 700px at 65% 80%, rgba(29,78,216,.12), transparent 55%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    .bg-waves{
+      position:fixed; inset:-40px;
+      background:
+        radial-gradient(600px 220px at 20% 10%, rgba(29,78,216,.10), transparent 60%),
+        radial-gradient(520px 220px at 70% 5%, rgba(22,163,74,.10), transparent 60%),
+        radial-gradient(520px 240px at 65% 85%, rgba(56,189,248,.10), transparent 60%);
+      pointer-events:none;
+      animation: drift 12s ease-in-out infinite alternate;
+      opacity:.85;
+      z-index:-1;
+    }
+    @keyframes drift{ from{ transform: translate3d(-10px,-8px,0);} to{ transform: translate3d(12px,10px,0);} }
+
+    header{
+      position:sticky; top:0; z-index:50;
+      background: rgba(246, 251, 255, .78);
+      backdrop-filter: blur(14px);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{
+      max-width:1200px; margin:0 auto;
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 12px 16px; gap:12px;
+    }
+
+    .brand{ display:flex; align-items:center; gap:12px; min-width: 280px; }
+
+    .logoWrap{ display:flex; align-items:center; gap:10px; }
+    .logoImg{
+      width:44px; height:44px; border-radius:14px;
+      object-fit: contain;
+      background: rgba(255,255,255,.85);
+      border:1px solid rgba(15,23,42,.10);
+      box-shadow: 0 10px 25px rgba(2,6,23,.10);
+      padding: 4px;
+    }
+    .logoSchool{
+      width:44px; height:44px;
+      border-radius:14px;
+      object-fit: contain;
+      background: rgba(255,255,255,.85);
+      border:1px solid rgba(15,23,42,.10);
+      box-shadow: 0 10px 25px rgba(2,6,23,.10);
+      padding: 6px;
+    }
+
+    .brand h1{ margin:0; font-size: 13.5px; line-height:1.15; letter-spacing:.2px; }
+    .brand p{ margin:2px 0 0; font-size: 12px; color: var(--muted); }
+
+    .navlinks{ display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end; }
+    .pill{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.70);
+      color: var(--text);
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .15s ease, background .15s ease;
+      display:flex; align-items:center; gap:8px;
+      box-shadow: 0 10px 25px rgba(2,6,23,.05);
+    }
+    .pill:hover{ transform: translateY(-1px); background: rgba(255,255,255,.92); }
+    .dot{ width:9px; height:9px; border-radius:999px; background: linear-gradient(90deg, var(--green), var(--blue)); }
+    .pill.alt .dot{ background: linear-gradient(90deg, var(--blue2), var(--green2)); }
+    .pill.ghost{ background: transparent; box-shadow:none; }
+
+    main{ max-width:1200px; margin:0 auto; padding: 22px 16px 80px; }
+
+    .hero{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap:14px;
+      align-items:stretch;
+      margin-top: 8px;
+    }
+    @media (max-width: 980px){ .hero{ grid-template-columns: 1fr; } .brand{ min-width:auto; } }
+
+    .card{
+      background: var(--card);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(420px 200px at 14% 10%, rgba(56,189,248,.22), transparent 70%),
+        radial-gradient(420px 220px at 78% 0%, rgba(22,163,74,.18), transparent 70%),
+        radial-gradient(420px 240px at 60% 105%, rgba(29,78,216,.12), transparent 70%);
+      pointer-events:none;
+    }
+    .inner{ position:relative; padding: 18px; }
+
+    .kicker{ display:flex; align-items:center; gap:10px; font-size: 12px; color: var(--muted); }
+    .badge{
+      border:1px solid rgba(15,23,42,.12);
+      background: rgba(255,255,255,.75);
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:800;
+      color: rgba(11,18,32,.92);
+    }
+
+    .title{ margin: 12px 0 10px; font-size: 34px; line-height:1.1; letter-spacing: .2px; }
+    .subtitle{ margin:0; color: var(--muted); font-size: 14px; line-height: 1.65; max-width: 72ch; }
+
+    .ctaRow{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 14px; }
+    .btn{
+      border:1px solid rgba(15,23,42,.12);
+      background: rgba(255,255,255,.82);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 14px;
+      cursor:pointer;
+      font-weight: 900;
+      font-size: 13px;
+      display:inline-flex; align-items:center; gap:10px;
+      user-select:none;
+      transition: transform .15s ease, background .15s ease;
+      box-shadow: 0 12px 28px rgba(2,6,23,.06);
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.98); }
+    .btn.primary{ background: linear-gradient(90deg, rgba(22,163,74,.18), rgba(56,189,248,.18)); border-color: rgba(22,163,74,.28); }
+    .btn.danger{ background: rgba(29,78,216,.06); border-color: rgba(29,78,216,.22); }
+
+    .miniStats{ display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; margin-top: 14px; }
+    @media (max-width: 560px){ .miniStats{ grid-template-columns: 1fr; } }
+    .stat{ background: rgba(255,255,255,.78); border:1px solid rgba(15,23,42,.10); border-radius: 16px; padding: 12px; }
+    .stat b{ display:block; font-size: 15px; }
+    .stat span{ color: var(--muted); font-size: 12px; }
+
+    .meter{ background: rgba(255,255,255,.78); border:1px solid rgba(15,23,42,.10); border-radius: 16px; padding: 12px; }
+    .meterTop{ display:flex; align-items:center; justify-content:space-between; gap:10px; color: var(--muted); font-size: 12px; margin-bottom: 10px; }
+    .bar{ height: 10px; background: rgba(15,23,42,.06); border-radius: 999px; overflow:hidden; border:1px solid rgba(15,23,42,.10); }
+    .bar > i{ display:block; height:100%; width: 0%; background: linear-gradient(90deg, var(--green), var(--blue2), var(--blue)); border-radius: 999px; transition: width .35s ease; }
+
+    .chipRow{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    .chip{
+      font-size: 12px;
+      color: rgba(11,18,32,.92);
+      padding: 8px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(15,23,42,.10);
+      background: rgba(255,255,255,.80);
+      cursor:pointer;
+      user-select:none;
+      transition: transform .15s ease, background .15s ease;
+    }
+    .chip:hover{ transform: translateY(-1px); background: rgba(255,255,255,.98); }
+
+    .section{ margin-top: 18px; padding-top: 6px; }
+    .sectionHeader{ display:flex; align-items:flex-end; justify-content:space-between; gap:14px; margin: 26px 0 10px; }
+    .sectionHeader h2{ margin:0; font-size: 18px; letter-spacing:.2px; }
+    .sectionHeader p{ margin:0; color: var(--muted); font-size: 12px; max-width: 70ch; }
+
+    .grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap: 12px; }
+    .span-4{ grid-column: span 4; }
+    .span-6{ grid-column: span 6; }
+    .span-12{ grid-column: span 12; }
+    @media (max-width: 980px){ .span-4,.span-6{ grid-column: span 12; } }
+
+    .tile{
+      background: rgba(255,255,255,.88);
+      border:1px solid rgba(15,23,42,.10);
+      border-radius: 18px;
+      padding: 14px;
+      position:relative;
+      overflow:hidden;
+      box-shadow: 0 14px 40px rgba(2,6,23,.06);
+    }
+    .tile h3{ margin:0 0 6px; font-size: 14px; letter-spacing:.2px; }
+    .tile p{ margin:0; color: var(--muted); font-size: 12px; line-height:1.65; }
+
+    .media{
+      width:100%;
+      border-radius: 16px;
+      border:1px solid rgba(15,23,42,.10);
+      box-shadow: 0 12px 30px rgba(2,6,23,.06);
+      margin-top: 10px;
+      overflow:hidden;
+      background: rgba(255,255,255,.75);
+    }
+    .media img{ width:100%; height:auto; display:block; }
+    .cap{ margin-top:8px; font-size: 11.5px; color: rgba(11,18,32,.65); }
+
+    .tag{
+      display:inline-flex; align-items:center; gap:8px;
+      margin-top: 10px;
+      font-size: 12px;
+      color: rgba(11,18,32,.92);
+      padding: 7px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(15,23,42,.10);
+      background: rgba(255,255,255,.85);
+      cursor:pointer; user-select:none;
+    }
+    .tag i{ width:10px; height:10px; border-radius:999px; background: linear-gradient(90deg, var(--green), var(--blue)); display:inline-block; }
+
+    /* Gallery (scroll-snap) */
+    .gallery{ display:flex; gap:12px; overflow:auto; padding: 6px 2px 14px; scroll-snap-type: x mandatory; }
+    .gallery::-webkit-scrollbar{ height: 10px; }
+    .gallery::-webkit-scrollbar-thumb{ background: rgba(29,78,216,.18); border-radius: 999px; }
+    .gCard{ min-width: 280px; max-width: 340px; scroll-snap-align: start; }
+    .gImg{ width:100%; height: 190px; object-fit: cover; border-radius: 16px; border:1px solid rgba(15,23,42,.10); }
+    .gCap{ font-size: 12px; color: var(--muted); margin-top: 8px; line-height: 1.5; }
+
+    /* Accordion */
+    .acc{ border:1px solid rgba(15,23,42,.10); background: rgba(255,255,255,.88); border-radius: 18px; overflow:hidden; box-shadow: 0 14px 40px rgba(2,6,23,.06); }
+    .acc button{
+      width:100%; border:0; background: transparent; color: var(--text);
+      padding: 14px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px;
+      cursor:pointer; font-weight: 900; letter-spacing:.2px;
+    }
+    .acc button span{ display:flex; align-items:center; gap:10px; text-align:left; }
+    .ico{ width:26px; height:26px; border-radius:10px; background: rgba(56,189,248,.20); border:1px solid rgba(29,78,216,.18); display:grid; place-items:center; font-weight:900; color: rgba(11,18,32,.92); }
+    .panel{ max-height:0px; overflow:hidden; transition: max-height .25s ease; border-top:1px solid rgba(15,23,42,.08); }
+    .content{ padding: 0 14px 14px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+    .content ul{ margin: 10px 0 0 18px; }
+    .content li{ margin: 6px 0; }
+
+    /* Calculator */
+    .calc{ display:grid; grid-template-columns: repeat(12, 1fr); gap: 10px; margin-top: 10px; }
+    .field{ grid-column: span 6; background: rgba(255,255,255,.90); border:1px solid rgba(15,23,42,.10); border-radius: 16px; padding: 10px; }
+    .field.full{ grid-column: span 12; }
+    .field label{ display:block; font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+    .field input{ width:100%; padding: 10px; border-radius: 14px; border:1px solid rgba(15,23,42,.10); background: rgba(246, 251, 255, .85); color: var(--text); outline:none; font-size: 13px; }
+    .out{ border:1px dashed rgba(29,78,216,.28); background: rgba(29,78,216,.04); border-radius: 16px; padding: 12px; font-size: 12px; color: rgba(11,18,32,.92); line-height: 1.65; }
+    .out b{ color: var(--text); }
+
+    /* Quiz */
+    .quizTop{ display:flex; flex-wrap:wrap; gap: 10px; align-items:flex-end; justify-content:space-between; margin-bottom: 10px; }
+    .toggle{ display:flex; gap:8px; align-items:center; padding: 10px 12px; border-radius: 16px; border:1px solid rgba(15,23,42,.10); background: rgba(255,255,255,.88); cursor:pointer; user-select:none; font-size: 12px; color: rgba(11,18,32,.92); box-shadow: 0 10px 30px rgba(2,6,23,.06); }
+    .toggle input{ accent-color: var(--green); }
+    .quizMeta{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; color: var(--muted); font-size: 12px; }
+
+    .qCard{ background: rgba(255,255,255,.90); border:1px solid rgba(15,23,42,.10); border-radius: 18px; padding: 14px; margin: 10px 0; box-shadow: 0 14px 40px rgba(2,6,23,.06); }
+    .qHead{ display:flex; gap:10px; align-items:flex-start; justify-content:space-between; }
+    .qHead h3{ margin:0; font-size: 14px; }
+    .qNum{ font-size: 12px; color: rgba(11,18,32,.92); background: rgba(52,211,153,.18); border:1px solid rgba(22,163,74,.22); padding: 6px 10px; border-radius: 999px; white-space:nowrap; font-weight:900; }
+    .opts{ margin-top: 10px; display:grid; gap:8px; }
+    .opt{ border:1px solid rgba(15,23,42,.10); background: rgba(246, 251, 255, .85); border-radius: 16px; padding: 10px; display:flex; gap:10px; align-items:flex-start; cursor:pointer; user-select:none; transition: transform .12s ease, background .12s ease, border-color .12s ease; }
+    .opt:hover{ transform: translateY(-1px); background: rgba(255,255,255,.98); border-color: rgba(29,78,216,.20); }
+    .opt input{ margin-top: 3px; accent-color: var(--blue); }
+
+    .resultBox{ margin-top: 12px; border-radius: 18px; padding: 14px; border:1px solid rgba(15,23,42,.10); background: rgba(22,163,74,.05); display:none; box-shadow: 0 14px 40px rgba(2,6,23,.06); }
+    .resultBox.show{ display:block; }
+    .grade{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between; }
+    .grade b{ font-size: 16px; }
+    .hint{ color: var(--muted); font-size: 12px; margin-top: 8px; line-height: 1.7; white-space: pre-wrap; }
+
+    footer{ margin-top: 34px; padding: 18px 0 0; border-top:1px solid rgba(15,23,42,.10); color: var(--muted); font-size: 12px; line-height: 1.7; }
+
+    /* Modo presentación */
+    body.presentation main{ max-width: 1380px; }
+    body.presentation .title{ font-size: 42px; }
+    body.presentation .subtitle{ font-size: 15px; }
+    body.presentation .tile, body.presentation .qCard, body.presentation .acc{ transform: scale(1.01); }
+
+    /* Toast */
+    .toast{ position: fixed; right: 16px; bottom: 16px; z-index: 60; background: rgba(255,255,255,.96); border:1px solid rgba(15,23,42,.12); border-radius: 18px; padding: 12px 12px; min-width: 260px; box-shadow: var(--shadow); backdrop-filter: blur(14px); display:none; }
+    .toast.show{ display:block; animation: pop .18s ease; }
+    @keyframes pop{ from{ transform: translateY(8px); opacity:.0;} to{ transform: translateY(0); opacity:1;} }
+    .toast b{ display:block; font-size: 13px; }
+    .toast span{ color: var(--muted); font-size: 12px; }
+  </style>
+</head>
+
+<body>
+  <div class="bg-waves"></div>
+
+  <header>
+    <div class="nav">
+      <div class="brand">
+        <div class="logoWrap">
+          <!-- ✅ Insignia UNDC (extraída del PPT) -->
+          <img class="logoImg" src="undc.png" alt="Insignia UNDC" />
+          <!-- ✅ Logo Escuela (SVG creado como insignia de Agronomía) -->
+          <img class="logoSchool" src="agronomia.png" alt="Logo Escuela de Agronomía" />
+        </div>
+        <div>
+          <h1>UNDC · Escuela Profesional de Agronomía · Sistema de Riego y Drenaje</h1>
+          <p>Sesión 2: <b>Diseño de Sistema de Riego</b> · Docente del curso: <b>Dr. Julio Cesar Matos Lizana</b></p>
+        </div>
+      </div>
+
+      <div class="navlinks">
+        <div class="pill" data-go="#inicio"><span class="dot"></span>Inicio</div>
+        <div class="pill" data-go="#galeria"><span class="dot"></span>Galería</div>
+        <div class="pill" data-go="#gravedad"><span class="dot"></span>Gravedad</div>
+        <div class="pill alt" data-go="#tecnificado"><span class="dot"></span>Tecnificado</div>
+        <div class="pill" data-go="#localizado"><span class="dot"></span>Localizado</div>
+        <div class="pill alt" data-go="#calculadoras"><span class="dot"></span>Calculadoras</div>
+        <div class="pill" data-go="#quiz"><span class="dot"></span>Quiz</div>
+        <div class="pill ghost" id="btnPresent"><span class="dot"></span>Modo presentación</div>
+      </div>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="card">
+        <div class="inner">
+          <div class="kicker">
+            <span class="badge">Sesión 2</span>
+            <span>Diseño de Sistema de Riego · criterios técnicos + decisiones de campo</span>
+          </div>
+
+          <h2 class="title">Diseña con criterio: <br/>agua · suelo · clima · energía</h2>
+
+          <p class="subtitle" style="margin-top:8px">
+            Docente del curso: <b>Dr. Julio Cesar Matos Lizana</b> · UNDC
+          </p>
+
+          <p class="subtitle" style="margin-top:10px">
+            En esta sesión consolidamos fundamentos de <b>riego por gravedad</b> (surcos, melgas, inundación) y
+            <b>riego tecnificado</b> (aspersión, microaspersión, goteo/subsuperficial), con enfoque en
+            <b>eficiencia</b>, <b>uniformidad</b> y decisiones de diseño hidráulico.
+          </p>
+
+          <div class="ctaRow">
+            <button class="btn primary" id="btnRuta">▶ Ruta guiada (8 min)</button>
+            <button class="btn" data-go="#quiz">🧠 Ir al quiz (10 preguntas)</button>
+            <button class="btn danger" id="btnReset">↺ Borrar registros</button>
+          </div>
+
+          <div class="miniStats">
+            <div class="stat"><b>Gravedad</b><span>Bajo costo energético · requiere nivelación</span></div>
+            <div class="stat"><b>Tecnificado</b><span>Aplicación controlada · ahorro significativo</span></div>
+            <div class="stat"><b>Localizado</b><span>Goteo/micro · fertirriego y precisión</span></div>
+          </div>
+
+          <div class="media" style="margin-top:12px">
+            <img src="riego_surcos.jpg" alt="Riego por surcos" />
+          </div>
+          <div class="cap">Figura: riego por surcos (método por gravedad).</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="inner">
+          <div class="meter">
+            <div class="meterTop"><span>Progreso de la sesión</span><span id="progressLabel">0%</span></div>
+            <div class="bar"><i id="progressBar"></i></div>
+            <div class="hint" style="margin-top:10px">Tip: usa “Modo presentación” para dictado y “Modo evaluación” para registrar puntajes.</div>
+          </div>
+
+          <div class="tile" style="margin-top:12px">
+            <h3>Objetivo del día</h3>
+            <p>
+              Seleccionar el método de riego adecuado y justificarlo con parámetros como
+              <b>pendiente</b>, <b>textura</b>, <b>disponibilidad de agua</b>, <b>eficiencia</b> y <b>uniformidad</b>.
+            </p>
+            <div class="chipRow">
+              <div class="chip" data-go="#gravedad">🌿 Gravedad</div>
+              <div class="chip" data-go="#tecnificado">💧 Tecnificado</div>
+              <div class="chip" data-go="#localizado">🎯 Localizado</div>
+              <div class="chip" data-go="#calculadoras">🧮 Cálculos</div>
+              <div class="chip" data-go="#quiz">📝 Evaluación</div>
+            </div>
+          </div>
+
+          <div class="tile" style="margin-top:12px">
+            <h3>Actividad rápida (equipos)</h3>
+            <p>
+              Caso por grupo: cultivo + suelo + ETo/Kc + dotación de agua → proponer sistema, justificar y dibujar croquis.
+            </p>
+            <div class="tag" id="btnPlantilla"><i></i> Copiar plantilla de caso</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALERÍA -->
+    <section class="section" id="galeria" data-progress="10">
+      <div class="sectionHeader">
+        <div>
+          <h2>Galería dinámica (desliza)</h2>
+          <p>Imágenes del contenido (tomadas del PPT de la sesión). Úsalas para explicar métodos, equipos y criterios.</p>
+        </div>
+        <div class="pill alt" data-go="#gravedad"><span class="dot"></span>Empezar</div>
+      </div>
+
+      <div class="tile span-12">
+        <div class="gallery" aria-label="Galería de riego">
+          <div class="gCard">
+            <img class="gImg" src="riego_surcos.jpg" alt="Riego por surcos" />
+            <div class="gCap"><b>Gravedad:</b> riego por surcos (avance e infiltración controlada).</div>
+          </div>
+          <div class="gCard">
+            <img class="gImg" src="surcos_planta.png" alt="Surcos en cultivo" />
+            <div class="gCap"><b>Gravedad:</b> distribución en parcela (operación y manejo del caudal).</div>
+          </div>
+          <div class="gCard">
+            <img class="gImg" src="aspersor_campo.jpg" alt="Aspersión en campo" />
+            <div class="gCap"><b>Tecnificado:</b> aspersión (uniformidad, presión y viento).</div>
+          </div>
+          <div class="gCard">
+            <img class="gImg" src="goteo_invernadero.jpg" alt="Goteo en invernadero" />
+            <div class="gCap"><b>Localizado:</b> goteo (precisión + fertirriego).</div>
+          </div>
+          <div class="gCard">
+            <img class="gImg" src="goteo_linea.png" alt="Línea de goteo" />
+            <div class="gCap"><b>Localizado:</b> línea de goteo y emisores (riesgo de obstrucción).</div>
+          </div>
+        </div>
+        <div class="cap">Tip: En PC/laderas enfatiza presión, pérdidas de carga y sectorización.</div>
+      </div>
+    </section>
+
+    <!-- GRAVEDAD -->
+    <section class="section" id="gravedad" data-progress="20">
+      <div class="sectionHeader">
+        <div>
+          <h2>1) Riego por gravedad</h2>
+          <p>Distribución por energía gravitatoria (sin presurización). Clave: nivelación, avance, infiltración y uniformidad.</p>
+        </div>
+        <div class="pill alt" data-go="#calculadoras"><span class="dot"></span>Ir a cálculos</div>
+      </div>
+
+      <div class="grid">
+        <div class="tile span-6">
+          <h3>Concepto e importancia</h3>
+          <p>
+            Aplica agua aprovechando el desnivel del terreno. Ventaja: <b>bajo costo energético</b>.
+            Riesgo: pérdidas por escorrentía/percolación si no hay buen diseño y operación.
+          </p>
+          <div class="tag" data-pop="Clave: nivelación + gasto óptimo + control del avance para mejorar uniformidad."><i></i> Idea clave</div>
+          <div class="media"><img src="surcos_planta.png" alt="Surcos"/></div>
+          <div class="cap">Figura: surcos; la uniformidad depende del control de avance y corte.</div>
+        </div>
+
+        <div class="tile span-6">
+          <h3>Infiltración y textura del suelo</h3>
+          <p>
+            La infiltración varía con la textura (<b>arenoso</b>, <b>franco</b>, <b>arcilloso</b>). Esto cambia la longitud de surco,
+            gasto y tiempo de aplicación.
+          </p>
+          <div class="media"><img src="infiltracion.png" alt="Curva de infiltración"/></div>
+          <div class="cap">Figura: velocidad de infiltración vs tiempo (tendencia por textura).</div>
+        </div>
+
+        <div class="acc span-12">
+          <button type="button" class="accBtn">
+            <span><span class="ico">A</span> Principios básicos de diseño (gravedad)</span>
+            <span>▼</span>
+          </button>
+          <div class="panel">
+            <div class="content">
+              <ul>
+                <li><b>Disponibilidad de agua:</b> caudal, continuidad, calidad.</li>
+                <li><b>Pendiente:</b> define método y trazado.</li>
+                <li><b>Textura:</b> controla infiltración (arenoso vs arcilloso).</li>
+                <li><b>Uniformidad:</b> lograr lámina similar en todo el surco/melga.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc span-12">
+          <button type="button" class="accBtn">
+            <span><span class="ico">B</span> Control de avance (medición en campo)</span>
+            <span>▼</span>
+          </button>
+          <div class="panel">
+            <div class="content">
+              <p>
+                La fase de avance inicia cuando se introduce el agua y termina al llegar al final del surco.
+                Se puede medir con estacas cada cierta distancia (ej. 10 m) y registrar tiempos para diagnosticar uniformidad.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TECNIFICADO -->
+    <section class="section" id="tecnificado" data-progress="55">
+      <div class="sectionHeader">
+        <div>
+          <h2>2) Riego tecnificado (presurizado)</h2>
+          <p>Aumenta control y eficiencia: aspersión, microaspersión, goteo, subsuperficial. Incluye bombeo, filtrado, válvulas y (opcional) fertirriego.</p>
+        </div>
+        <div class="pill" data-go="#localizado"><span class="dot"></span>Ver localizado</div>
+      </div>
+
+      <div class="grid">
+        <div class="tile span-4">
+          <h3>¿Por qué tecnificar?</h3>
+          <p>Mejora eficiencia, reduce pérdidas, facilita fertirriego y aumenta uniformidad.</p>
+          <div class="tag" data-pop="Tecnificar = precisión + productividad + sostenibilidad del agua."><i></i> Mensaje clave</div>
+        </div>
+
+        <div class="tile span-4">
+          <h3>Aspersión</h3>
+          <p>
+            Requiere presión; sensible a <b>viento</b>. Útil en muchos cultivos por su versatilidad.
+          </p>
+          <div class="media"><img src="aspersor_cerca.jpg" alt="Aspersor"/></div>
+          <div class="cap">Figura: aspersor; considerar viento, presión y uniformidad.</div>
+        </div>
+
+        <div class="tile span-4">
+          <h3>Cabezal de control</h3>
+          <p>
+            Bomba, filtros (arena/malla/disco), válvulas, manómetros y opcional: inyector de fertilizantes.
+          </p>
+          <div class="media"><img src="aspersores_cultivo.png" alt="Aspersión en cultivo"/></div>
+          <div class="cap">Figura: aspersión en cultivo (control de sectores).</div>
+        </div>
+
+        <div class="acc span-12">
+          <button type="button" class="accBtn">
+            <span><span class="ico">1</span> Etapas del diseño (tecnificado)</span>
+            <span>▼</span>
+          </button>
+          <div class="panel">
+            <div class="content">
+              <ul>
+                <li><b>Diagnóstico:</b> cultivo, clima, suelo, topografía, agua disponible.</li>
+                <li><b>Necesidades hídricas:</b> estimar ETc y lámina; definir frecuencia.</li>
+                <li><b>Selección del sistema:</b> según condiciones y costos.</li>
+                <li><b>Diseño hidráulico:</b> caudales, diámetros, pérdidas, presión de servicio.</li>
+                <li><b>Verificación:</b> uniformidad y eficiencia esperadas.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOCALIZADO -->
+    <section class="section" id="localizado" data-progress="75">
+      <div class="sectionHeader">
+        <div>
+          <h2>3) Riego localizado (goteo y micro)</h2>
+          <p>Aplicación en zona radicular. Crítico: selección de emisores, presión de trabajo, trazado, filtrado y pérdidas de carga.</p>
+        </div>
+        <div class="pill alt" data-go="#quiz"><span class="dot"></span>Practicar (quiz)</div>
+      </div>
+
+      <div class="grid">
+        <div class="tile span-6">
+          <h3>Presión y uniformidad</h3>
+          <p>
+            Variaciones de presión generan diferencias de caudal. Emisores <b>PC</b> (autocompensados) ayudan en pendientes o líneas largas.
+          </p>
+          <div class="tag" data-pop="Objetivo práctico: mantener presión dentro del rango del emisor para alta uniformidad."><i></i> Regla de oro</div>
+          <div class="media"><img src="goteo_linea.png" alt="Línea de goteo"/></div>
+          <div class="cap">Figura: línea de goteo; el filtrado evita obstrucciones.</div>
+        </div>
+
+        <div class="tile span-6">
+          <h3>Goteo en campo / invernadero</h3>
+          <p>
+            Alta eficiencia y precisión. Permite fertirriego y programación por etapa fenológica.
+          </p>
+          <div class="media"><img src="goteo_invernadero.jpg" alt="Goteo"/></div>
+          <div class="cap">Figura: goteo; ajustar caudal y espaciamiento según textura.</div>
+        </div>
+
+        <div class="acc span-12">
+          <button type="button" class="accBtn">
+            <span><span class="ico">E</span> Trazado recomendado</span>
+            <span>▼</span>
+          </button>
+          <div class="panel">
+            <div class="content">
+              <ul>
+                <li><b>Principal:</b> ubicar para minimizar pérdidas y facilitar sectorización.</li>
+                <li><b>Laterales:</b> preferible en curvas de nivel en laderas.</li>
+                <li><b>Accesorios:</b> válvulas, ventosas, reguladores según necesidad.</li>
+                <li><b>Filtrado:</b> clave para evitar obstrucción (principal problema del goteo).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALCULADORAS -->
+    <section class="section" id="calculadoras" data-progress="90">
+      <div class="sectionHeader">
+        <div>
+          <h2>4) Calculadoras express</h2>
+          <p>Herramientas rápidas para aula: ETc, lámina bruta y volumen (m³/ha). + Caudal total por emisores.</p>
+        </div>
+        <div class="pill" data-go="#quiz"><span class="dot"></span>Evaluar</div>
+      </div>
+
+      <div class="grid">
+        <div class="tile span-12">
+          <h3>Calculadora 1: ETc, Lámina (LR) y Volumen</h3>
+          <p style="margin-bottom:10px">Fórmulas: <b>ETc = ETo × FT × Kc</b> y <b>LR = ETc / Eficiencia</b>. Conversión: <b>1 mm ≈ 10 m³/ha</b>.</p>
+
+          <div class="calc">
+            <div class="field"><label>ETo (mm/día)</label><input type="number" step="0.01" id="eto" value="5"></div>
+            <div class="field"><label>FT (factor tanque)</label><input type="number" step="0.01" id="ft" value="0.8"></div>
+            <div class="field"><label>Kc (coeficiente del cultivo)</label><input type="number" step="0.01" id="kc" value="0.7"></div>
+            <div class="field"><label>Eficiencia (0–1)</label><input type="number" step="0.01" id="ef" value="0.9"></div>
+            <div class="field full out" id="out1">Ingresa valores y presiona “Calcular”.</div>
+          </div>
+
+          <div class="ctaRow">
+            <button class="btn primary" id="btnCalc1">🧮 Calcular</button>
+            <button class="btn" id="btnEj1">⚡ Cargar ejemplo</button>
+          </div>
+        </div>
+
+        <div class="tile span-12">
+          <h3>Calculadora 2: Caudal total por emisores (aprox.)</h3>
+          <p style="margin-bottom:10px">Fórmula: <b>Qtotal (L/h) = Nplantas × goteros/planta × caudal_gotero</b>. Volumen diario = Q(m³/h) × horas/día.</p>
+
+          <div class="calc">
+            <div class="field"><label>Número de plantas</label><input type="number" step="1" id="nplantas" value="3332"></div>
+            <div class="field"><label>Goteros por planta</label><input type="number" step="1" id="ngoteros" value="2"></div>
+            <div class="field"><label>Caudal del gotero (L/h)</label><input type="number" step="0.1" id="qgot" value="4"></div>
+            <div class="field"><label>Horas de riego/día</label><input type="number" step="0.1" id="hriego" value="2"></div>
+            <div class="field full out" id="out2">Ingresa valores y presiona “Calcular”.</div>
+          </div>
+
+          <div class="ctaRow">
+            <button class="btn primary" id="btnCalc2">🧮 Calcular</button>
+            <button class="btn" id="btnEj2">⚡ Cargar ejemplo</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="section" id="quiz" data-progress="100">
+      <div class="sectionHeader">
+        <div>
+          <h2>5) Quiz (10 preguntas) — Práctica / Evaluación</h2>
+          <p>En modo evaluación se registra <b>apellido</b> y se guarda el puntaje en este navegador (solo local).</p>
+        </div>
+        <div class="pill alt" id="btnVerReg"><span class="dot"></span>Copiar registros</div>
+      </div>
+
+      <div class="tile span-12">
+        <div class="quizTop">
+          <label class="toggle"><input type="checkbox" id="evalMode"><span><b>Modo evaluación</b> (guardar puntaje)</span></label>
+          <div class="field" style="min-width:240px; margin:0"><label>Apellido (obligatorio en evaluación)</label><input id="apellido" placeholder="Ej.: Matos"></div>
+          <div class="quizMeta"><span>⏱️ 8–10 min</span><span>🎯 Puntaje: <b id="scoreLive">0</b>/10</span></div>
+        </div>
+
+        <div id="quizWrap"></div>
+
+        <div class="ctaRow" style="margin-top:12px">
+          <button class="btn primary" id="btnEnviar">✅ Enviar quiz</button>
+          <button class="btn" id="btnReintentar">🔁 Reintentar</button>
+          <button class="btn" id="btnMostrar">🧩 Ver retroalimentación</button>
+        </div>
+
+        <div class="resultBox" id="resultBox">
+          <div class="grade">
+            <div>
+              <b id="finalGrade">Resultado: 0/10</b>
+              <div class="hint" id="gradeNote">—</div>
+            </div>
+            <div class="pill alt" id="btnCopiarResumen"><span class="dot"></span>Copiar resumen</div>
+          </div>
+          <div class="hint" id="feedback">Retroalimentación aparecerá aquí.</div>
+        </div>
+
+        <footer>
+          <div><b>Docente del curso:</b> Dr. Julio Cesar Matos Lizana</div>
+          <div>UNDC · Escuela Profesional de Agronomía · Sistema de Riego y Drenaje · Sesión 2</div>
+          <div style="margin-top:6px"><b>Imágenes:</b> extraídas del PPT de la sesión (uso académico en aula).</div>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"><b id="toastTitle">Listo</b><span id="toastMsg">—</span></div>
+
+  <script>
+    const $ = (q, el=document) => el.querySelector(q);
+    const $$ = (q, el=document) => [...el.querySelectorAll(q)];
+    const fmt = (n, d=2)=> Number.isFinite(n) ? n.toFixed(d) : "—";
+
+    function toast(title, msg){
+      $("#toastTitle").textContent = title;
+      $("#toastMsg").textContent = msg;
+      const t = $("#toast");
+      t.classList.add("show");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(()=>t.classList.remove("show"), 2300);
+    }
+
+    function goTo(sel){
+      const el = document.querySelector(sel);
+      if(!el) return;
+      el.scrollIntoView({behavior:"smooth", block:"start"});
+    }
+
+    // Navegación
+    $$('[data-go]').forEach(b=> b.addEventListener('click', ()=> goTo(b.getAttribute('data-go')) ));
+
+    // Acordeones
+    $$('.accBtn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const panel = btn.parentElement.querySelector('.panel');
+        const isOpen = panel.style.maxHeight && panel.style.maxHeight !== '0px';
+        panel.style.maxHeight = isOpen ? '0px' : (panel.scrollHeight + 'px');
+      });
+    });
+
+    // Modo presentación
+    $('#btnPresent').addEventListener('click', ()=>{
+      document.body.classList.toggle('presentation');
+      toast('Modo presentación', document.body.classList.contains('presentation') ? 'Activado.' : 'Desactivado.');
+    });
+
+    // Barra de progreso (por secciones)
+    const progressBar = $('#progressBar');
+    const progressLabel = $('#progressLabel');
+    const sections = $$('section.section');
+    const obs = new IntersectionObserver((entries)=>{
+      let maxP = 0;
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          const p = Number(e.target.getAttribute('data-progress')||0);
+          if(p>maxP) maxP = p;
+        }
+      });
+      if(maxP>0){
+        progressBar.style.width = maxP + '%';
+        progressLabel.textContent = maxP + '%';
+      }
+    }, { threshold: 0.22 });
+    sections.forEach(s=>obs.observe(s));
+
+    // Ruta guiada
+    $('#btnRuta').addEventListener('click', async ()=>{
+      const stops = ['#galeria','#gravedad','#tecnificado','#localizado','#calculadoras','#quiz'];
+      toast('Ruta guiada', 'Recorrido por puntos clave.');
+      for(const s of stops){
+        goTo(s);
+        await new Promise(r=>setTimeout(r, 850));
+      }
+    });
+
+    // Plantilla caso
+    $('#btnPlantilla').addEventListener('click', ()=>{
+      const plantilla = [
+        'PLANTILLA (Caso de diseño) — Sesión 2: Diseño de Sistema de Riego',
+        '1) Cultivo y etapa fenológica:',
+        '2) Área (ha) y espaciamiento:',
+        '3) Suelo (textura, infiltración, profundidad efectiva):',
+        '4) Topografía (pendiente/nivelación):',
+        '5) Clima (ETo, viento, precipitación):',
+        '6) Agua disponible (caudal, calidad, presión):',
+        '7) Sistema propuesto (justificación):',
+        '8) Croquis (principal/secundarias/laterales o surcos/melgas):',
+        '9) Parámetros: ETc, lámina, eficiencia, presión/caudal:'
+      ].join('\n');
+      navigator.clipboard.writeText(plantilla);
+      toast('Plantilla copiada', 'Pégala en Word/WhatsApp.');
+    });
+
+    // Insights (tags)
+    $$('[data-pop]').forEach(el=> el.addEventListener('click', ()=> toast('Insight', el.getAttribute('data-pop'))) );
+
+    // Reset registros
+    $('#btnReset').addEventListener('click', ()=>{
+      localStorage.removeItem('undc_riego_s2_registros');
+      toast('Registros borrados', 'Se eliminó el historial local del quiz.');
+    });
+
+    // Calculadora 1
+    function calc1(){
+      const eto = parseFloat($('#eto').value);
+      const ft  = parseFloat($('#ft').value);
+      const kc  = parseFloat($('#kc').value);
+      const ef  = parseFloat($('#ef').value);
+
+      if([eto,ft,kc,ef].some(v=>!Number.isFinite(v)) || ef<=0){
+        $('#out1').innerHTML = '⚠️ Revisa los valores (eficiencia debe ser > 0).';
+        return;
+      }
+      const etc = eto*ft*kc;
+      const lr  = etc/ef;
+      const vol = lr*10; // m3/ha por día
+
+      $('#out1').innerHTML =
+        `✅ <b>ETc</b> = ${fmt(etc,2)} mm/día<br>`+
+        `✅ <b>LR (aprox.)</b> = ${fmt(lr,2)} mm/día<br>`+
+        `✅ <b>Volumen</b> ≈ ${fmt(vol,2)} m³/ha/día <span style="color:rgba(11,18,32,.60)">(1 mm = 10 m³/ha)</span>`;
+    }
+    $('#btnCalc1').addEventListener('click', calc1);
+    $('#btnEj1').addEventListener('click', ()=>{
+      $('#eto').value = 5; $('#ft').value = 0.8; $('#kc').value = 0.7; $('#ef').value = 0.9;
+      calc1();
+      toast('Ejemplo cargado', 'Valores de referencia aplicados.');
+    });
+    calc1();
+
+    // Calculadora 2
+    function calc2(){
+      const nplantas = parseFloat($('#nplantas').value);
+      const ngoteros = parseFloat($('#ngoteros').value);
+      const qgot     = parseFloat($('#qgot').value);
+      const hriego   = parseFloat($('#hriego').value);
+
+      if([nplantas,ngoteros,qgot,hriego].some(v=>!Number.isFinite(v)) || hriego<=0){
+        $('#out2').innerHTML = '⚠️ Revisa los valores (horas de riego debe ser > 0).';
+        return;
+      }
+      const qLh = nplantas * ngoteros * qgot;
+      const qM3h = qLh / 1000;
+      const volDiaM3 = qM3h * hriego;
+
+      $('#out2').innerHTML =
+        `✅ <b>Q total</b> = ${fmt(qLh,0)} L/h (≈ ${fmt(qM3h,2)} m³/h)<br>`+
+        `✅ <b>Volumen/día</b> = ${fmt(volDiaM3,2)} m³/día`;
+    }
+    $('#btnCalc2').addEventListener('click', calc2);
+    $('#btnEj2').addEventListener('click', ()=>{
+      $('#nplantas').value = 3332; $('#ngoteros').value = 2; $('#qgot').value = 4; $('#hriego').value = 2;
+      calc2();
+      toast('Ejemplo cargado', 'Ejemplo tipo (emisores).');
+    });
+    calc2();
+
+    // Quiz
+    const quiz = [
+      { q: 'En riego por gravedad, ¿qué condición permite operar sin bombeo?',
+        a: ['Uso de emisores PC', 'Aprovecha pendiente y gravedad', 'Presión ≥ 2 bar', 'Filtrado obligatorio'], c: 1,
+        why: 'Gravedad distribuye el agua por pendiente natural.' },
+      { q: '¿Cuál NO es un método de riego por gravedad?',
+        a: ['Surcos', 'Melgas', 'Inundación', 'Goteo'], c: 3,
+        why: 'Goteo corresponde a riego localizado/tecnificado.' },
+      { q: '¿Qué describe mejor la fase de avance en surcos?',
+        a: ['Tiempo hasta llegar al final del surco', 'Presión del gotero', 'Evaporación del tanque', 'Velocidad del viento'], c: 0,
+        why: 'Se mide el tiempo que tarda el frente de agua en recorrer el surco.' },
+      { q: 'En tecnificado, el cabezal de control suele incluir:',
+        a: ['Bordos y regaderas', 'Bomba, filtros, válvulas y manómetros', 'Solo laterales', 'Solo aspersores'], c: 1,
+        why: 'El cabezal integra bombeo y control/filtrado.' },
+      { q: 'Relación base para necesidades hídricas del cultivo:',
+        a: ['ETc = ETo × Kc', 'ETc = Kc / ETo', 'LR = ETo × eficiencia', 'Q = presión × altura'], c: 0,
+        why: 'ETc se estima multiplicando ETo por Kc (y según el caso se incluye FT).' },
+      { q: '¿Por qué es crítico el filtrado en goteo?',
+        a: ['Aumenta la evaporación', 'Evita obstrucción de emisores', 'Sustituye la bomba', 'Elimina pérdidas de carga'], c: 1,
+        why: 'La obstrucción es un problema típico del goteo.' },
+      { q: 'Ventaja clave de emisores autocompensados (PC):',
+        a: ['Mantienen caudal ante variaciones de presión', 'Eliminan filtrado', 'No requieren válvulas', 'Aumentan la infiltración'], c: 0,
+        why: 'Ayudan a sostener uniformidad cuando varía la presión.' },
+      { q: 'Distancia entre goteros más adecuada en suelos arenosos (tendencia):',
+        a: ['Menor distancia', 'Mayor distancia', 'No depende del suelo', 'Siempre 2 metros'], c: 0,
+        why: 'En arenosos el bulbo es más estrecho; se recomienda menor espaciamiento.' },
+      { q: 'En diseño hidráulico, las pérdidas de carga son importantes porque:',
+        a: ['Incrementan presión', 'Reducen presión y afectan uniformidad', 'Aumentan caudal gratis', 'Hacen innecesario Kc'], c: 1,
+        why: 'Menor presión disponible implica variación de caudales en emisores.' },
+      { q: 'Conversión práctica usada en riego: 1 mm de lámina ≈',
+        a: ['1 m³/ha', '10 m³/ha', '100 m³/ha', '1000 m³/ha'], c: 1,
+        why: '1 mm sobre 1 ha equivale a 10 m³.' }
+    ];
+
+    const quizWrap = $('#quizWrap');
+    const scoreLive = $('#scoreLive');
+    const resultBox = $('#resultBox');
+    const finalGrade = $('#finalGrade');
+    const gradeNote = $('#gradeNote');
+    const feedback = $('#feedback');
+
+    function renderQuiz(){
+      quizWrap.innerHTML = '';
+      quiz.forEach((item, idx)=>{
+        const card = document.createElement('div');
+        card.className = 'qCard';
+        card.innerHTML = `
+          <div class="qHead">
+            <h3>${item.q}</h3>
+            <div class="qNum">P${idx+1}</div>
+          </div>
+          <div class="opts">
+            ${item.a.map((opt, j)=>`
+              <label class="opt">
+                <input type="radio" name="q${idx}" value="${j}">
+                <div>${opt}</div>
+              </label>
+            `).join('')}
+          </div>
+          <div class="hint" style="display:none" data-why="q${idx}">💡 ${item.why}</div>
+        `;
+        quizWrap.appendChild(card);
+      });
+
+      $$('input[type=radio]', quizWrap).forEach(r=>{
+        r.addEventListener('change', ()=> scoreLive.textContent = calcScore(false).score);
+      });
+    }
+
+    function calcScore(showWhy){
+      let score = 0;
+      const details = [];
+      quiz.forEach((item, idx)=>{
+        const chosen = document.querySelector(`input[name="q${idx}"]:checked`);
+        const val = chosen ? Number(chosen.value) : null;
+        const ok = (val === item.c);
+        if(ok) score++;
+        details.push({idx, val, ok, correct:item.c, why:item.why});
+        const whyEl = document.querySelector(`[data-why="q${idx}"]`);
+        if(whyEl) whyEl.style.display = showWhy ? 'block' : 'none';
+      });
+      return {score, details};
+    }
+
+    function gradeMsg(score){
+      if(score === 10) return 'Excelente: dominio total de criterios de diseño.';
+      if(score >= 8) return 'Muy bien: afina detalles de uniformidad/pérdidas de carga.';
+      if(score >= 6) return 'Bien: repasa ETc-lámina, selección de emisores y filtrado.';
+      if(score >= 4) return 'En proceso: vuelve a gravedad/tecnificado y practica con calculadoras.';
+      return 'Refuerzo: repasa conceptos base (métodos, ETc, eficiencia, presión y pérdidas).';
+    }
+
+    function saveRecord(apellido, score){
+      const key = 'undc_riego_s2_registros';
+      const stamp = new Date().toLocaleString('es-PE', {hour12:false});
+      const rec = { apellido, score, total: 10, stamp };
+      const arr = JSON.parse(localStorage.getItem(key) || '[]');
+      arr.unshift(rec);
+      localStorage.setItem(key, JSON.stringify(arr.slice(0,100)));
+    }
+
+    $('#btnEnviar').addEventListener('click', ()=>{
+      const {score, details} = calcScore(false);
+      scoreLive.textContent = score;
+
+      const evalMode = $('#evalMode').checked;
+      const apellido = $('#apellido').value.trim();
+
+      if(evalMode && apellido.length < 2){
+        toast('Falta apellido', 'En modo evaluación debes ingresar tu apellido.');
+        $('#apellido').focus();
+        return;
+      }
+
+      resultBox.classList.add('show');
+      finalGrade.textContent = `Resultado: ${score}/10`;
+      gradeNote.textContent = gradeMsg(score);
+
+      const wrong = details.filter(d=>!d.ok);
+      feedback.textContent = (!wrong.length)
+        ? '✅ Perfecto. Mantén el enfoque: selección del sistema + uniformidad + eficiencia + presión/pérdidas de carga.'
+        : '🧾 Revisa estas preguntas:\n\n' + wrong.map(d=>{
+            const chosenTxt = (d.val===null) ? 'Sin responder' : quiz[d.idx].a[d.val];
+            const corrTxt = quiz[d.idx].a[d.correct];
+            return `• P${d.idx+1}: elegiste "${chosenTxt}" | correcta: "${corrTxt}".\n  💡 ${d.why}`;
+          }).join('\n\n');
+
+      if(evalMode){
+        saveRecord(apellido.toUpperCase(), score);
+        toast('Guardado', `${apellido.toUpperCase()} — ${score}/10`);
+      }else{
+        toast('Listo', `Tu puntaje: ${score}/10`);
+      }
+    });
+
+    $('#btnReintentar').addEventListener('click', ()=>{
+      $$('input[type=radio]').forEach(r=> r.checked=false);
+      scoreLive.textContent = '0';
+      resultBox.classList.remove('show');
+      toast('Reintentar', 'Quiz reiniciado.');
+    });
+
+    $('#btnMostrar').addEventListener('click', ()=>{
+      const showing = document.querySelector('[data-why="q0"]').style.display === 'block';
+      calcScore(!showing);
+      toast(showing ? 'Ocultado' : 'Mostrando', 'Retroalimentación por pregunta.');
+    });
+
+    $('#btnCopiarResumen').addEventListener('click', ()=>{
+      const evalMode = $('#evalMode').checked;
+      const apellido = ($('#apellido').value || 'ESTUDIANTE').trim().toUpperCase();
+      const {score} = calcScore(false);
+      const text =
+        `UNDC - Agronomía | Sistema de Riego y Drenaje\n`+
+        `Sesión 2: Diseño de Sistema de Riego\n`+
+        `Docente: Dr. Julio Cesar Matos Lizana\n`+
+        `Apellido: ${evalMode ? apellido : '(modo práctica)'}\n`+
+        `Puntaje: ${score}/10\n`;
+      navigator.clipboard.writeText(text);
+      toast('Copiado', 'Resumen copiado al portapapeles.');
+    });
+
+    $('#btnVerReg').addEventListener('click', ()=>{
+      const arr = JSON.parse(localStorage.getItem('undc_riego_s2_registros') || '[]');
+      if(!arr.length){
+        toast('Sin registros', 'Activa modo evaluación y envía el quiz para guardar puntajes.');
+        return;
+      }
+      const top = arr.slice(0,15).map((r,i)=>`${i+1}. ${r.apellido} — ${r.score}/10 — ${r.stamp}`).join('\n');
+      navigator.clipboard.writeText(top);
+      toast('Registros copiados', 'Se copió TOP 15 al portapapeles.');
+    });
+
+    // Init
+    renderQuiz();
+  </script>
+</body>
+</html>
