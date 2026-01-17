@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Logo Escuela de Agronomía">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#16A34A"/>
+      <stop offset="1" stop-color="#38BDF8"/>
+    </linearGradient>
+  </defs>
+  <rect x="36" y="36" width="440" height="440" rx="96" fill="#FFFFFF" stroke="#0B1220" stroke-opacity="0.12" stroke-width="12"/>
+  <circle cx="256" cy="256" r="184" fill="url(#g)" opacity="0.18"/>
+
+  <!-- hoja -->
+  <path d="M152 300c92-8 166-82 200-172 20 112-44 248-200 270-32 4-54-8-64-24 8-38 30-68 64-74z" fill="#16A34A"/>
+  <path d="M176 316c62-14 118-66 150-132 6 74-42 154-150 178" fill="none" stroke="#0B1220" stroke-opacity="0.28" stroke-width="10" stroke-linecap="round"/>
+
+  <!-- gota -->
+  <path d="M334 160c36 58 52 88 52 116 0 42-34 76-76 76s-76-34-76-76c0-28 16-58 52-116 10-16 38-16 48 0z" fill="#1D4ED8" opacity="0.92"/>
+  <circle cx="302" cy="292" r="16" fill="#FFFFFF" opacity="0.85"/>
+
+  <!-- texto -->
+  <text x="256" y="430" text-anchor="middle" font-family="ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto" font-size="34" font-weight="800" fill="#0B1220" opacity="0.88">AGRONOMÍA</text>
+  <text x="256" y="465" text-anchor="middle" font-family="ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto" font-size="18" font-weight="700" fill="#0B1220" opacity="0.6">ESCUELA PROFESIONAL</text>
+</svg>
